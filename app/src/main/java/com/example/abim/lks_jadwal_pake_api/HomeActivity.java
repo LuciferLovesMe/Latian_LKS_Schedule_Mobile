@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -86,8 +87,9 @@ public class HomeActivity extends AppCompatActivity  {
                 StringRequest request = new StringRequest(Request.Method.POST, MyRequest.getLoginURL(), new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            if (response != null) {
+//                        if (response == null) {
+                            try {
+                                Log.d("Message", "MEssage nih");
                                 JSONObject obj = new JSONObject(response);
                                 s.setUser(obj.getInt("id"), obj.getString("name"));
 
@@ -95,7 +97,7 @@ public class HomeActivity extends AppCompatActivity  {
                                 startActivity(intent);
                                 finish();
                             }
-                            else {
+                            catch (Exception exception){
                                 AlertDialog dialog = new AlertDialog.Builder(ctx).create();
                                 dialog.setTitle("Error");
                                 dialog.setMessage("Can't Find User");
@@ -107,9 +109,19 @@ public class HomeActivity extends AppCompatActivity  {
                                 });
                                 dialog.show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+//                        }
+//                        else {
+//                            AlertDialog dialog = new AlertDialog.Builder(ctx).create();
+//                            dialog.setTitle("Error");
+//                            dialog.setMessage("Can't Find User");
+//                            dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.dismiss();
+//                                }
+//                            });
+//                            dialog.show();
+//                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
